@@ -15,6 +15,10 @@ public class Book extends Product{
         this.author = author;
     }
 
+    public Book() {
+
+    }
+
     public String getAuthor() {
         return author;
     }

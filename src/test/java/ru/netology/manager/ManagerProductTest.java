@@ -12,35 +12,85 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class ManagerProductTest {
 
-    private final Product firstProduct = new Product(1, "firstProduct",100);
-    private final Product secondProduct = new Product(2, "secondProduct",200);
-    private final Book firstBook = new Book(3, "firstBook",300, "Pushkin");
-    private final Book secondBook = new Book(4, "secondBook",400,"Tolstoy");
-    private final Smartphone firstSmartphone = new Smartphone(5, "firstSmartphone",3000, "Motorola");
-    private final Smartphone secondSmartphone = new Smartphone (6, "secondSmartphone",4000,"Nokia");
+    private static Product product1 = new Product(1, "Product1", 100);
+    private static Product product2 = new Product(2, "Product2", 200);
+    private static Product book = new Book(3, "Book1", 100, "Pushkin");
+    private static Book book1 = new Book(4, "Book2", 400, "Tolstoy");
+    private static Smartphone smartphone = new Smartphone(5, "Smartphone1", 100, "Motorola");
+    private static Smartphone smartphone1 = new Smartphone(6, "Smartphone2", 4000, "Nokia");
 
     private ManagerProduct manager = new ManagerProduct(new ProductRepository());
 
     @BeforeEach
+    void setApp() {
 
-    void setApp(){
-        manager.save(firstProduct);
-        manager.save(secondProduct);
-        manager.save(firstBook);
-        manager.save(secondBook);
-        manager.save(firstSmartphone);
-        manager.save(secondSmartphone);
+        manager.save(book);
+        manager.save(book1);
+        manager.save(smartphone);
+        manager.save(smartphone1);
+
+    }
+
+
+    @Test
+    public void shouldFindBook1Author() {
+        Product[] expected = {book};
+        Product[] actual = manager.searchBy("Pushkin");
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindBook2Author() {
+        Product[] expected = {book1};
+        Product[] actual = manager.searchBy("Tolstoy");
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindBook1Name() {
+        Product[] expected = {book};
+        Product[] actual = manager.searchBy("Book1");
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindBook2Name() {
+        Product[] expected = {book1};
+        Product[] actual = manager.searchBy("Book2");
+        assertArrayEquals(expected, actual);
+    }
+
+
+    @Test
+    public void shouldFindSmartphone1Manufacturer() {
+        Product[] expected = {smartphone};
+        Product[] actual = manager.searchBy("Motorola");
+        assertArrayEquals(expected, actual);
 
     }
 
     @Test
-
-    void shouldReturnByText(){
-        Product[] expected = {firstProduct,firstBook,firstSmartphone};
-        Product[] actual = manager.searchBy("Pushkin");
+    public void shouldFindSmartphone2Manufacturer() {
+        Product[] expected = {smartphone1};
+        Product[] actual = manager.searchBy("Nokia");
         assertArrayEquals(expected, actual);
-        System.out.println(actual);
+
     }
 
+    @Test
+    public void shouldFindSmartphone1Name() {
+        Product[] expected = {smartphone};
+        Product[] actual = manager.searchBy("Smartphone1");
+        assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldFindSmartphone2Name() {
+        Product[] expected = {smartphone1};
+        Product[] actual = manager.searchBy("Smartphone2");
+        assertArrayEquals(expected, actual);
+
+    }
 
 }
