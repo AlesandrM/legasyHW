@@ -1,6 +1,5 @@
 package ru.netology.manager;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Book;
@@ -12,85 +11,82 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 class ManagerProductTest {
 
-    private static Product product1 = new Product(1, "Product1", 100);
-    private static Product product2 = new Product(2, "Product2", 200);
-    private static Product book = new Book(3, "Book1", 100, "Pushkin");
-    private static Book book1 = new Book(4, "Book2", 400, "Tolstoy");
-    private static Smartphone smartphone = new Smartphone(5, "Smartphone1", 100, "Motorola");
-    private static Smartphone smartphone1 = new Smartphone(6, "Smartphone2", 4000, "Nokia");
+    private static final Product first = new Product(1, "Product1", 100);
+    private static final Product second = new Product(2, "Product2", 200);
+    private static final Product third = new Book(3, "Book1", 100, "Pushkin");
+    private static final Book fourth = new Book(4, "Book2", 400, "Tolstoy");
+    private static final Smartphone fifth= new Smartphone(5, "Smartphone1", 1000, "Motorola");
+    private static final Smartphone sixth = new Smartphone(6, "Smartphone2", 4000, "Nokia");
 
-    private ManagerProduct manager = new ManagerProduct(new ProductRepository());
+    private final ManagerProduct manager = new ManagerProduct(new ProductRepository());
 
     @BeforeEach
     void setApp() {
-
-        manager.save(book);
-        manager.save(book1);
-        manager.save(smartphone);
-        manager.save(smartphone1);
-
-    }
+        manager.save(first);
+        manager.save(second);
+        manager.save(third);
+        manager.save(fourth);
+        manager.save(fifth);
+        manager.save(sixth);}
 
 
     @Test
     public void shouldFindBook1Author() {
-        Product[] expected = {book};
-        Product[] actual = manager.searchBy("Pushkin");
+        Product[] expected = {third};
+        Product[] actual = manager.searchBy("Pushkin",third);
         assertArrayEquals(expected, actual);
     }
 
+
     @Test
     public void shouldFindBook2Author() {
-        Product[] expected = {book1};
-        Product[] actual = manager.searchBy("Tolstoy");
+        Product[] expected = {fourth};
+        Product[] actual = manager.searchBy("Tolstoy",fourth);
         assertArrayEquals(expected, actual);
     }
 
     @Test
     public void shouldFindBook1Name() {
-        Product[] expected = {book};
-        Product[] actual = manager.searchBy("Book1");
+        Product[] expected = {third};
+        Product[] actual = manager.searchBy("Book1",third);
         assertArrayEquals(expected, actual);
     }
 
     @Test
     public void shouldFindBook2Name() {
-        Product[] expected = {book1};
-        Product[] actual = manager.searchBy("Book2");
+        Product[] expected = {fourth};
+        Product[] actual = manager.searchBy("Book2",fourth);
         assertArrayEquals(expected, actual);
     }
+
 
 
     @Test
     public void shouldFindSmartphone1Manufacturer() {
-        Product[] expected = {smartphone};
-        Product[] actual = manager.searchBy("Motorola");
+        Product[] expected = {fifth};
+        Product[] actual = manager.searchBy("Motorola",fifth);
         assertArrayEquals(expected, actual);
-
     }
 
     @Test
     public void shouldFindSmartphone2Manufacturer() {
-        Product[] expected = {smartphone1};
-        Product[] actual = manager.searchBy("Nokia");
+        Product[] expected = {sixth};
+        Product[] actual = manager.searchBy("Nokia",sixth);
         assertArrayEquals(expected, actual);
-
     }
 
     @Test
     public void shouldFindSmartphone1Name() {
-        Product[] expected = {smartphone};
-        Product[] actual = manager.searchBy("Smartphone1");
+        Product[] expected = {fifth};
+        Product[] actual = manager.searchBy("Smartphone1",fifth);
         assertArrayEquals(expected, actual);
-
     }
 
     @Test
     public void shouldFindSmartphone2Name() {
-        Product[] expected = {smartphone1};
-        Product[] actual = manager.searchBy("Smartphone2");
+        Product[] expected = {sixth};
+        Product[] actual = manager.searchBy("Smartphone2",sixth);
         assertArrayEquals(expected, actual);
-
     }
 
 }

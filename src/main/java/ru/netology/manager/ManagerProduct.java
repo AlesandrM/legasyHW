@@ -1,6 +1,5 @@
 package ru.netology.manager;
 
-import org.jetbrains.annotations.NotNull;
 import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.domain.Smartphone;
@@ -10,6 +9,7 @@ public class ManagerProduct {
     private ProductRepository repository;
 
     public ManagerProduct(ProductRepository repository) {
+
         this.repository = repository;
     }
 
@@ -17,41 +17,45 @@ public class ManagerProduct {
         this.repository.save(product);
     }
 
-    public Product[] searchBy(String text) {
+    public void add (Product item){repository.save(item);}
+
+
+    public Product[] searchBy(String text,  Product product) {
+
         Product[] products = this.repository.findAll();
-        Product[] result = new  Product[0];
-        for (Product product: products){
-            if (matches(product, text)){
+        Product[] result = new Product[0];
                 Product[] tmp = new Product[result.length + 1];
-                System.arraycopy(result, 0, tmp, 0, result.length);
-                tmp[tmp.length - 1] = product;
+              System.arraycopy(result, 0, tmp, 0, result.length);
+                tmp[tmp.length-1] = product;
                 result = tmp;
 
-            }
-        }
         return result;
+
     }
 
     public boolean matches( Product product, String search) {
+
         if (product.getName().contains(search)) {
-        return true;
+            return true;
         }
         if (product instanceof Book) {
             Book book = (Book) product;
             if (book.getAuthor().contains(search)) {
                 return true;
             }
-
             return false;
         }
         if (product instanceof Smartphone) {
-
             Smartphone smartphone = (Smartphone) product;
             if (smartphone.getManufacturer().contains(search));
             return true;
         }
-            return false;
-        }
 
+        return false;
+
+    }
 }
+
+
+
 
